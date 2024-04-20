@@ -36,11 +36,11 @@ const Login = () => {
                                         />
                                         <p className='text-black font-medium font-para text-lg'>Remember me</p>
                                     </div>
-                                    <p className='text-gray font-medium font-para text-lg'>
+                                    {/* <p className='text-gray font-medium font-para text-lg'>
                                         <Link to={'/forget-password'}>
                                             Forgot Password
                                         </Link>
-                                    </p>
+                                    </p> */}
                                 </div>
                                 <button className='text-white text-lg my-2 md:text-md lg:text-lg font-subhead px-2 py-2 md:px-6 rounded-md bg-yellow-400 hover:text-black hover:bg-transparent border-2 w-full border-yellow-400 duration-300 ease-in-out'>Login</button>
                                 <p className='text-black font-bold text-center font-para text-lg'>Don’t have an account? 
