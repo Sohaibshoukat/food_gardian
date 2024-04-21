@@ -1,10 +1,68 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Nav from '../Components/Nav'
 import Footer from '../Components/Footer'
-import { SocialLink } from '../../Data/Navigation'
+import { SocialLink } from '../Data/Navigation'
+import AlertContext from '../Context/Alert/AlertContext'
+import { BaseAPI } from '../Data/BaseAPI'
 
 const Login = () => {
+
+    const AletContext = useContext(AlertContext);
+    const { showAlert } = AletContext;
+
+    const navigate = useNavigate()
+
+    const [formData, setFormData] = useState({
+        Email: '',
+        Password: '',
+    });
+
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Ensure no fields are empty
+        const requiredFields = ['Email', 'Password'];
+        const emptyFields = requiredFields.filter(field => !formData[field]);
+        if (emptyFields.length > 0) {
+            showAlert("All fields are required", "danger");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${BaseAPI}/api/userAuth/loginuser`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const responseData = await response.json();
+
+            if (!responseData.success) {
+                showAlert(responseData.message, "danger");
+                return;
+            }
+
+            sessionStorage.setItem("gardiantoken",responseData.AuthToken)
+            if(responseData?.Role=="Business"){
+                navigate("/business")
+            }else{
+                navigate("/customer")
+            }
+            
+        } catch (error) {
+            showAlert(error.message, 'danger');
+        }
+    };
+
     return (
         <>
             <Nav />
@@ -22,27 +80,33 @@ const Login = () => {
                                     type="email"
                                     placeholder='abc@gmail.com'
                                     className='py-3 text-lg px-4 border-2 border-black/30 bg-transparent rounded-lg'
+                                    name="Email"
+                                    value={formData.Email}
+                                    onChange={handleChange}
                                 />
                                 <input
                                     type="password"
-                                    placeholder='******'
+                                    placeholder='Password'
                                     className='py-3 text-lg px-4 border-2 border-black/30 bg-transparent rounded-lg'
+                                    name="Password"
+                                    value={formData.Password}
+                                    onChange={handleChange}
                                 />
                                 <div className="flex flex-col gap-2 md:flex-row justify-between md:items-center">
                                     <div className="flex gap-3 items-center">
                                         <input
-                                            type="check"
+                                            type="checkbox"
                                             className='w-5 h-5  border-2 border-black/30 bg-transparent rounded-md'
                                         />
                                         <p className='text-black font-medium font-para text-lg'>Remember me</p>
                                     </div>
-                                    {/* <p className='text-gray font-medium font-para text-lg'>
-                                        <Link to={'/forget-password'}>
-                                            Forgot Password
-                                        </Link>
-                                    </p> */}
                                 </div>
-                                <button className='text-white text-lg my-2 md:text-md lg:text-lg font-subhead px-2 py-2 md:px-6 rounded-md bg-yellow-400 hover:text-black hover:bg-transparent border-2 w-full border-yellow-400 duration-300 ease-in-out'>Login</button>
+                                <button 
+                                    className='text-white text-lg my-2 md:text-md lg:text-lg font-subhead px-2 py-2 md:px-6 rounded-md bg-yellow-400 hover:text-black hover:bg-transparent border-2 w-full border-yellow-400 duration-300 ease-in-out'
+                                    onClick={handleSubmit}
+                                >
+                                    Login
+                                </button>
                                 <p className='text-black font-bold text-center font-para text-lg'>Don’t have an account? 
                                     <Link to={'/sign-up'}>
                                         <span className='text-gray-500'>
@@ -51,7 +115,6 @@ const Login = () => {
                                     </Link>
                                 </p>
                                 <div className='flex flex-col gap-4 my-2'>
-
                                 </div>
                             </div>
                         </div>

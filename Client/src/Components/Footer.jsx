@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavMenu, SocialLink } from '../../Data/Navigation'
+import { NavMenu, SocialLink } from '../Data/Navigation'
 
 const Footer = () => {
     const Data = [

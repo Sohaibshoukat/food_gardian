@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { GiHamburgerMenu } from "react-icons/gi"
 import { FaLocationDot } from "react-icons/fa6";
 import { IoMdClose, IoMdMail } from "react-icons/io"
-import { NavMenu, SocialLink } from '../../Data/Navigation';
+import { NavMenu, SocialLink } from '../Data/Navigation';
 import { IoCallOutline } from 'react-icons/io5';
 
 

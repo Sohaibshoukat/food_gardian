@@ -1,0 +1,1 @@
+export const BaseAPI="https://foodgardian.zypherdigital.com"

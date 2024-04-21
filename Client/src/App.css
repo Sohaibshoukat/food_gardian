@@ -1,0 +1,17 @@
+.OwnerBanner{
+    background: url('../public/assets/Banner/BannerOwner.png');
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.dishbg{
+    background: url('../public/assets/DishBanner.png');
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.gradientyellow{
+    background: linear-gradient(139.14deg, #F8B602 23.19%, #F0C868 104.35%, rgba(240, 200, 104, 0) 104.35%);
+}
